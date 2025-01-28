@@ -59,13 +59,13 @@
 
     video {
       display: none;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       position: fixed;
       top: 0;
       left: 0;
       z-index: 9999;
-      object-fit: cover; /* Video akan mengisi layar penuh */
+      object-fit: cover;
     }
   </style>
 </head>
@@ -91,7 +91,7 @@
     <button class="btn" onclick="playVideo()">Baca Lebih Lanjut</button>
   </div>
 
-  <video id="prankVideo" controls autoplay>
+  <video id="prankVideo" controls>
     <source src="video.mp4" type="video/mp4">
     Browser Anda tidak mendukung video tag.
   </video>
@@ -100,8 +100,11 @@
     function playVideo() {
       const video = document.getElementById("prankVideo");
       video.style.display = "block";
-      video.requestFullscreen(); // Memastikan video langsung full layar
-      video.play();
+      video.requestFullscreen().then(() => {
+        video.play();
+      }).catch(err => {
+        console.error("Gagal masuk fullscreen:", err);
+      });
     }
   </script>
 
